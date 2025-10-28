@@ -1,42 +1,39 @@
-import java.time.LocalDateTime;
 
-public class Ticket {
+public class Ticket implements Gestionable {
     private static int contador = 1;
     private int id;
-    private String titulo;
     private String descripcion;
-    private String estado; // abierto, en proceso, cerrado
-    private Usuario creador;
-    private Usuario asignado;
-    private LocalDateTime fechaCreacion;
+    private String estado;
+    private String prioridad;
+    private String cliente;
 
-    public Ticket(String titulo, String descripcion, Usuario creador) {
+    public Ticket(String descripcion, String prioridad, String cliente) {
         this.id = contador++;
-        this.titulo = titulo;
         this.descripcion = descripcion;
-        this.creador = creador;
-        this.estado = "abierto";
-        this.fechaCreacion = LocalDateTime.now();
+        this.estado = "Abierto";
+        this.prioridad = prioridad;
+        this.cliente = cliente;
+    }
+    // Métodos para gestionar el contador estático (útiles tras deserializar)
+    public static int getContador() {
+        return contador;
     }
 
-    public int getId() { return id; }
-    public void asignarTecnico(Usuario tecnico) {
-        this.asignado = tecnico;
-        this.estado = "en proceso";
+    public static void setContador(int nuevo) {
+        if (nuevo > contador) {
+            contador = nuevo;
+        }
     }
-
-
-    public void cerrarTicket() {
-        this.estado = "cerrado";
-    }
+    public void cerrarTicket() { this.estado = "Cerrado"; }
 
     @Override
     public String toString() {
-        return "Ticket #" + id + " - " + titulo +
-               "\nDescripción: " + descripcion +
-               "\nEstado: " + estado +
-               "\nCreado por: " + creador +
-               "\nAsignado a: " + (asignado != null ? asignado : "Nadie") +
-               "\nFecha: " + fechaCreacion;
+        return "ID: " + id + " | Cliente: " + cliente + 
+               " | Estado: " + estado + " | Prioridad: " + prioridad +
+               " | Descripción: " + descripcion;
     }
+    public int getId() {
+        return this.id;              // devuelve el id de la instancia (CORRECTO)
+    }
+
 }
