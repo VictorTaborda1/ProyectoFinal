@@ -1,5 +1,8 @@
+import java.io.Serializable;
 
-public class Ticket implements Gestionable {
+public class Ticket implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     private static int contador = 1;
     private int id;
     private String descripcion;
@@ -14,26 +17,32 @@ public class Ticket implements Gestionable {
         this.prioridad = prioridad;
         this.cliente = cliente;
     }
-    // Métodos para gestionar el contador estático (útiles tras deserializar)
-    public static int getContador() {
-        return contador;
-    }
 
-    public static void setContador(int nuevo) {
-        if (nuevo > contador) {
-            contador = nuevo;
-        }
-    }
+    // Getters y setters
+    public int getId() { return id; }
+    public String getDescripcion() { return descripcion; }
+    public String getEstado() { return estado; }
+    public String getPrioridad() { return prioridad; }
+    public String getCliente() { return cliente; }
+
+    public void setDescripcion(String descripcion) { this.descripcion = descripcion; }
+    public void setPrioridad(String prioridad) { this.prioridad = prioridad; }
+    public void setCliente(String cliente) { this.cliente = cliente; }
+
     public void cerrarTicket() { this.estado = "Cerrado"; }
+
+    // Métodos para el contador estático
+    public static int getContador() { return contador; }
+    public static void setContador(int nuevo) {
+        if (nuevo > contador) contador = nuevo;
+    }
 
     @Override
     public String toString() {
-        return "ID: " + id + " | Cliente: " + cliente + 
-               " | Estado: " + estado + " | Prioridad: " + prioridad +
+        return "ID: " + id +
+               " | Cliente: " + cliente +
+               " | Estado: " + estado +
+               " | Prioridad: " + prioridad +
                " | Descripción: " + descripcion;
     }
-    public int getId() {
-        return this.id;              // devuelve el id de la instancia (CORRECTO)
-    }
-
 }
