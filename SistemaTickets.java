@@ -1,8 +1,13 @@
-import java.util.*;
+    import java.util.*;
 import java.io.*;
 public class SistemaTickets implements Gestionable {
-    private ArrayList<Ticket> tickets = new ArrayList<>();
+    private ArrayList<Ticket> tickets = new ArrayList<>();// composicion//
     private Scanner sc = new Scanner(System.in);
+
+    public SistemaTickets() {
+    // Si más adelante necesitas inicializar algo extra, lo haces aquí
+    System.out.println("Sistema de tickets iniciado correctamente");
+    }   
 
     @Override
     public void crear() {
@@ -11,12 +16,50 @@ public class SistemaTickets implements Gestionable {
         System.out.print("Prioridad (Alta/Media/Baja): ");
         String prio = sc.nextLine();
         System.out.print("Nombre del cliente: ");
-        String cliente = sc.nextLine();
+        String nombreCliente = sc.nextLine();
+        // Crear el objeto Cliente
+        Cliente cliente = new Cliente(nombreCliente,"");
 
         Ticket t = new Ticket(desc, prio, cliente);
         tickets.add(t);
         System.out.println("Ticket creado con ID: " + t.getId());
     }
+    // =============================
+    // MÉTODOS DE PERSISTENCIA
+    // =============================
+
+    public void guardarArchivoTxt() {
+        try (PrintWriter pw = new PrintWriter(new FileWriter("tickets.txt"))) {
+            for (Ticket t : tickets) {
+                pw.println(t.getId() + ";" +
+                           t.getDescripcion() + ";" +
+                           t.getPrioridad() + ";" +
+                           t.getEstado());
+            }
+            System.out.println("📄 Datos guardados en tickets.txt");
+        } catch (IOException e) {
+            System.out.println("⚠️ Error al guardar archivo: " + e.getMessage());
+        }
+    }
+
+    public void cargarArchivoTxt() {
+        try (BufferedReader br = new BufferedReader(new FileReader("tickets.txt"))) {
+            String linea;
+            while ((linea = br.readLine()) != null) {
+                String[] datos = linea.split(";");
+                Ticket t = new Ticket(datos[1], datos[2], new Cliente("Desconocido", ""));
+                t.setId(Integer.parseInt(datos[0]));
+                t.setEstado(datos[3]);
+                tickets.add(t);
+            }
+            System.out.println("📂 Datos cargados desde tickets.txt");
+        } catch (FileNotFoundException e) {
+            System.out.println("⚠️ No existe el archivo tickets.txt");
+        } catch (IOException e) {
+            System.out.println("⚠️ Error de lectura: " + e.getMessage());
+        }
+    }
+
 
     @Override
     public void listar() {
