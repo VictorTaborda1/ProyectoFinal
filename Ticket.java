@@ -8,9 +8,10 @@ public class Ticket implements Serializable {
     private String descripcion;
     private String estado;
     private String prioridad;
-    private Cliente cliente;  // Asociación
-    private Tecnico tecnico;  // Agregación
+    private Cliente cliente;  // agregacion
     private String solucion;
+    private Tecnico tecnicoAsignado;
+
 
     public Ticket(String descripcion, String prioridad, Cliente cliente) {
         this.id = contador++;
@@ -18,6 +19,7 @@ public class Ticket implements Serializable {
         this.estado = "Abierto";
         this.prioridad = prioridad;
         this.cliente = cliente;
+        
     }
       public void registrarSolucion(String solucion) {
         this.solucion = solucion;
@@ -25,16 +27,23 @@ public class Ticket implements Serializable {
     }
 
     public void asignarTecnico(Tecnico tecnico) {
-        this.tecnico = tecnico; // Agregación (el técnico existe independientemente)
+        this.tecnicoAsignado = tecnico; // Agregación (el técnico existe independientemente)
     }
     public void mostrarInfo() {
         System.out.println("Ticket #" + id + " - " + descripcion +
                            "\nPrioridad: " + prioridad +
-                           "\nEstado: " + estado +
-                           "\nCliente: " + cliente.getNombre() +
-                           "\nTécnico: " + (tecnico != null ? tecnico.getNombre() : "No asignado") +
-                           "\nSolución: " + (solucion != null ? solucion : "Pendiente"));
+                           "\nEstado: " + estado );
+    if (cliente != null) {
+        System.out.println("👤 Cliente: " + cliente.getNombre());
     }
+    if (tecnicoAsignado != null) {
+        System.out.println("🧑‍💻 Técnico asignado: " + tecnicoAsignado.getNombre());
+    }
+    if (solucion != null && !solucion.isEmpty()) {
+        System.out.println("✅ Solución: " + solucion);
+    }
+    System.out.println("----------------------------------");
+}
 
 
     // Getters y setters
@@ -43,7 +52,11 @@ public class Ticket implements Serializable {
     public String getEstado() { return estado; }
     public String getPrioridad() { return prioridad; }
     public Cliente getCliente() { return cliente; }
+    public Tecnico getTecnicoAsignado() {return tecnicoAsignado;}
+    public String getSolucion() {return solucion;}
 
+    public void setSolucion(String solucion) {this.solucion = solucion;}
+    public void setTecnicoAsignado(Tecnico tecnicoAsignado) {this.tecnicoAsignado = tecnicoAsignado;}
     public void setDescripcion(String descripcion) { this.descripcion = descripcion; }
     public void setPrioridad(String prioridad) { this.prioridad = prioridad; }
     public void setCliente(Cliente cliente) { this.cliente = cliente; }

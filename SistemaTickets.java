@@ -1,13 +1,72 @@
-    import java.util.*;
+import java.util.*;
 import java.io.*;
 public class SistemaTickets implements Gestionable {
     private ArrayList<Ticket> tickets = new ArrayList<>();// composicion//
     private Scanner sc = new Scanner(System.in);
 
     public SistemaTickets() {
-    // Si más adelante necesitas inicializar algo extra, lo haces aquí
-    System.out.println("Sistema de tickets iniciado correctamente");
+        // Si más adelante necesitas inicializar algo extra, lo haces aquí
+        System.out.println("Sistema de tickets iniciado correctamente");
     }   
+    public Ticket buscarTicketPorId(int id) {
+    for (Ticket t : tickets) {  // 'tickets' es la lista de tickets
+        if (t.getId() == id) {
+            return t;
+        }
+    }
+    return null; // Si no encuentra el ticket, devuelve null
+    }
+
+
+    @Override
+    public void asignarTecnico() {
+    Scanner sc = new Scanner(System.in);
+    System.out.print("Ingrese el ID del ticket al que desea asignar un técnico: ");
+    int id = sc.nextInt();
+    sc.nextLine();
+
+    Ticket ticket = buscarTicketPorId(id);
+    if (ticket == null) {
+        System.out.println("⚠️ Ticket no encontrado.");
+        return;}
+
+    System.out.print("Nombre del técnico: ");
+    String nombre = sc.nextLine();
+    System.out.print("Correo del técnico: ");
+    String email = sc.nextLine();
+    System.out.print("Especialidad del técnico: ");
+    String especialidad = sc.nextLine();
+
+    Tecnico tecnico = new Tecnico(nombre, email, especialidad);
+    ticket.setTecnicoAsignado(tecnico);
+
+    System.out.println("✅ Técnico asignado correctamente al ticket " + id);}
+    @Override
+    public void cerrarTicket() {
+    Scanner sc = new Scanner(System.in);
+    System.out.print("Ingrese el ID del ticket que desea cerrar: ");
+    int id = sc.nextInt();
+    sc.nextLine();
+
+    Ticket ticket = buscarTicketPorId(id);
+    if (ticket == null) {
+        System.out.println("⚠️ Ticket no encontrado.");
+        return;
+    }
+
+    if (ticket.getTecnicoAsignado() == null) {
+        System.out.println("⚠️ No se puede cerrar el ticket sin asignar un técnico.");
+        return;
+    }
+
+    System.out.print("Ingrese la solución del ticket: ");
+    String solucion = sc.nextLine();
+    ticket.setSolucion(solucion);
+    ticket.setEstado("Cerrado");
+
+    System.out.println("✅ Ticket " + id + " cerrado con éxito.");
+}
+
 
     @Override
     public void crear() {
@@ -83,7 +142,7 @@ public class SistemaTickets implements Gestionable {
 
     @Override
     public void guardarArchivo() {
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("tickets.dat"))) {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("tickets.txt"))) {
             oos.writeObject(tickets);
             System.out.println("Datos guardados correctamente.");
         } catch (IOException e) {
@@ -92,7 +151,7 @@ public class SistemaTickets implements Gestionable {
     }
 @Override
 public void cargarArchivo() {
-    try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("tickets.dat"))) {
+    try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("tickets.txt"))) {
         @SuppressWarnings("unchecked")
         ArrayList<Ticket> lista = (ArrayList<Ticket>) ois.readObject();
         if (lista != null) {
@@ -133,10 +192,11 @@ public void cargarArchivo() {
             System.out.println("\n=== SISTEMA DE TICKETS ===");
             System.out.println("1. Crear ticket");
             System.out.println("2. Listar tickets");
-            System.out.println("3. Cerrar ticket");
-            System.out.println("4. Guardar en archivo");
-            System.out.println("5. Cargar desde archivo");
-            System.out.println("6. Salir");
+            System.out.println("3. Guardar en archivo");
+            System.out.println("4. Asignar técnico a un ticket");
+            System.out.println("5. Cerrar ticket con solución");
+            System.out.println("6. Cargar desde archivo");
+            System.out.println("7. Salir");
             System.out.print("Seleccione una opción: ");
 
             try {
@@ -144,15 +204,17 @@ public void cargarArchivo() {
                 switch (opcion) {
                     case 1 -> crear();
                     case 2 -> listar();
-                    case 3 -> cerrar();
-                    case 4 -> guardarArchivo();
-                    case 5 -> cargarArchivo();
-                    case 6 -> System.out.println("Saliendo...");
+                    case 3 -> guardarArchivo();
+                    case 4 -> asignarTecnico();
+                    case 5 -> cerrarTicket();
+                    case 6 -> cargarArchivo();
+                    case 7 -> System.out.println("Saliendo...");
                     default -> System.out.println("Opción inválida.");
+                    case 9 -> cerrar();
                 }
             } catch (Exception e) {
                 System.out.println("Error: " + e.getMessage());
             }
-        } while (opcion != 6);
+        } while (opcion != 7);
     }
 }

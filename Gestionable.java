@@ -4,4 +4,6 @@ public interface Gestionable {
     void cerrar();       // Modificar o cerrar un registro
     void guardarArchivo();
     void cargarArchivo();
+    void asignarTecnico();   
+    void cerrarTicket(); 
 }

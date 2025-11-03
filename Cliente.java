@@ -13,4 +13,7 @@ public class Cliente extends Persona implements Serializable {
     public void mostrarInfo() {
         System.out.println("👤 Cliente: " + nombre + " - Empresa: " + empresa);
     }
+
+    public String getEmpresa() { return empresa; }
+
 }
