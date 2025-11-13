@@ -1,14 +1,20 @@
-public abstract class Empleado {
-    private String nombre;
-    private String idEmpleado;
+import java.io.Serializable;
 
-    public Empleado(String nombre, String idEmpleado) {
-        this.nombre = nombre;
-        this.idEmpleado = idEmpleado;
+public class Empleado extends Persona  implements Serializable{
+    private static final long serialVersionUID = 1L;
+    private String departamento;
+
+    public Empleado(String nombre, String email, String departamento) {
+        super(nombre, email);
+        this.departamento = departamento;
     }
 
-    public String getNombre() { return nombre; }
-    public String getIdEmpleado() { return idEmpleado; }
+    public String getDepartamento() {
+        return departamento;
+    }
 
-    public abstract void mostrarInfo();
+    @Override
+    public void mostrarInfo() {
+        System.out.println("👨‍💼 Empleado: " + nombre + " - Departamento: " + departamento);
+    }
 }
