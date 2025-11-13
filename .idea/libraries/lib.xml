@@ -1,0 +1,27 @@
+<component name="libraryTable">
+  <library name="lib">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/font-asian-9.3.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/forms-9.3.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/hyph-9.3.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/sign-9.3.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/layout-9.3.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/styled-xml-parser-9.3.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/bouncy-castle-adapter-9.3.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/barcodes-9.3.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/slf4j-api-2.0.12.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/svg-9.3.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/commons-9.3.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/pdftest-9.3.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/pdfua-9.3.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/bouncy-castle-fips-adapter-9.3.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/kernel-9.3.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/io-9.3.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/bouncy-castle-connector-9.3.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/pdfa-9.3.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/slf4j-simple-2.0.12.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
