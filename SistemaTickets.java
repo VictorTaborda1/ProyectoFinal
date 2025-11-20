@@ -56,6 +56,12 @@ public class SistemaTickets implements Gestionable {
 
     System.out.println("✅ Técnico asignado correctamente al ticket " + id);}
 
+    public ArrayList<Ticket> getTickets() {
+    return tickets;
+    }
+
+
+
 
     @Override
     public void cerrarTicket() {                                    //se cierra el ticket
