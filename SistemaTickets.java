@@ -61,7 +61,7 @@ public class SistemaTickets implements Gestionable {
     }
 
 
-
+    
 
     @Override
     public void cerrarTicket() {                                    //se cierra el ticket
